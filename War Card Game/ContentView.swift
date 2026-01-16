@@ -8,30 +8,54 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "back"
+    @State var cpuCard = "back"
+    
+    @State var playerScore: Int = 0
+    @State var cpuScore: Int = 0
+    
+    
     var body: some View {
         ZStack{
             Image("background-plain")
+                .resizable()
+                .ignoresSafeArea()
+                .aspectRatio(contentMode: .fill)
             
             VStack() {
                 Spacer()
                 // Logo
-                Image("logo")
-                    .resizable()
-                    .frame(width: 200, height: 200)
+//                Image("logo")
+//                    .resizable()
+//                    .frame(width: 200, height: 200)
+                
+                Button{
+                    resetGame()
+                } label:{
+                    Image("logo")
+                }
+                
+                
                 Spacer()
                 
                 // Cards
                 HStack (){
                     Spacer()
-                    Image("back")
+                    Image(playerCard)
                     Spacer()
-                    Image("back")
+                    Image(cpuCard)
                     Spacer()
                 }
                 Spacer()
 
                 // Button
-                Image("button")
+                // Image("button") commenting out for now
+                Button{
+                    dealCards()
+                } label: {
+                    Image("button")
+                }
                 
                 Spacer()
                 
@@ -43,7 +67,7 @@ struct ContentView: View {
                             .bold()
                             .font(.largeTitle)
                             .padding(.bottom, 5)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(.largeTitle)
                     }
                     Spacer()
@@ -52,7 +76,7 @@ struct ContentView: View {
                             .bold()
                             .font(.largeTitle)
                             .padding(.bottom, 5)
-                        Text("0")
+                        Text(String(cpuScore))
                             .font(.largeTitle)
                     }
                     Spacer()
@@ -68,6 +92,35 @@ struct ContentView: View {
             
         }
 
+    }
+    
+    func dealCards(){
+        
+        var playerValue = Int.random(in: 2...14)
+        var cpuValue = Int.random(in: 2...14)
+
+        playerCard = "card\(playerValue)"
+        cpuCard = "card\(cpuValue)"
+        
+        if (playerCard > cpuCard){
+            playerScore += 1
+        }
+        if (cpuCard > playerCard){
+            cpuScore += 1
+        }
+        
+        
+        
+        
+        
+    }
+    
+    func resetGame(){
+        playerCard = "back"
+        cpuCard = "back"
+        
+        playerScore = 0
+        cpuScore = 0
     }
 }
 
